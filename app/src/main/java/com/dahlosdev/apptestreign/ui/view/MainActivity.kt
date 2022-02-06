@@ -20,10 +20,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        hackNewsViewModel.onCreate()
+     //   hackNewsViewModel.onCreate()
+        hackNewsViewModel.getHackNewsPage(2)
 
         hackNewsViewModel.hackNewsModel.observe(this, Observer {
-            binding.txtTest.text = it.nbPages
+            binding.txtTest.text = it.hits[0].story_title
         })
 
     }
