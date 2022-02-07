@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dahlosdev.apptestreign.data.model.HackNewsModel
 import com.dahlosdev.apptestreign.domain.GetHackNews
+import com.dahlosdev.apptestreign.domain.model.HackNews
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class HackNewsViewModel @Inject constructor(
     private val getHackNews: GetHackNews
 ) : ViewModel() {
 
-    var hackNewsModel = MutableLiveData<HackNewsModel>()
+    var hackNewsModel = MutableLiveData<List<HackNews>>()
     val isLoading = MutableLiveData<Boolean>()
     val isRefreshing = MutableLiveData<Boolean>()
 
@@ -24,7 +25,7 @@ class HackNewsViewModel @Inject constructor(
             val result = getHackNews()
 
             if (result != null) {
-                hackNewsModel.postValue(result!!)
+                hackNewsModel.postValue(result)
                 isLoading.postValue(false)
             }
         }
@@ -36,7 +37,7 @@ class HackNewsViewModel @Inject constructor(
             val result = getHackNews()
 
             if (result != null) {
-                hackNewsModel.postValue(result!!)
+                hackNewsModel.postValue(result)
                 isRefreshing.postValue(false)
             }
         }

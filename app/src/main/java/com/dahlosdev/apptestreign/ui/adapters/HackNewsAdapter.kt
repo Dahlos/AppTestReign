@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dahlosdev.apptestreign.R
-import com.dahlosdev.apptestreign.data.model.HitModel
+import com.dahlosdev.apptestreign.domain.model.HackNews
 
-class HackNewsAdapter(private val hackNewsList: MutableList<HitModel>) :
+class HackNewsAdapter(private var hackNewsList: List<HackNews>) :
     RecyclerView.Adapter<HackNewsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HackNewsViewHolder {
@@ -16,22 +16,15 @@ class HackNewsAdapter(private val hackNewsList: MutableList<HitModel>) :
 
     override fun onBindViewHolder(holder: HackNewsViewHolder, position: Int) {
         holder.render(hackNewsList[position])
-        holder.itemView.setOnClickListener{
-            hackNewsList.removeAt(position)
+        holder.itemView.setOnClickListener {
+            hackNewsList =
+                hackNewsList.filterNot { it.objectID == hackNewsList[position].objectID }
             notifyDataSetChanged()
         }
     }
 
     override fun getItemCount(): Int = hackNewsList.size
 
-    fun deleteItem(i: Int) {
-        hackNewsList.removeAt(i)
-        notifyDataSetChanged()
-    }
-
-    fun clear(){
-        hackNewsList.clear()
-        notifyDataSetChanged()
-    }
 }
+
 

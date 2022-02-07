@@ -1,7 +1,6 @@
 package com.dahlosdev.apptestreign.ui.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -9,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.dahlosdev.apptestreign.data.model.HackNewsModel
 import com.dahlosdev.apptestreign.databinding.ActivityMainBinding
 import com.dahlosdev.apptestreign.ui.adapters.HackNewsAdapter
 import com.dahlosdev.apptestreign.ui.viewmodel.HackNewsViewModel
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         hackNewsViewModel.hackNewsModel.observe(this, Observer {
             binding.rvHackNews.layoutManager = manager
-            binding.rvHackNews.adapter = HackNewsAdapter(it.hits)
+            binding.rvHackNews.adapter = HackNewsAdapter(it)
             if (binding.rvHackNews.itemDecorationCount == 0) {
                 val decoration = DividerItemDecoration(this, manager.orientation)
                 binding.rvHackNews.addItemDecoration(decoration)

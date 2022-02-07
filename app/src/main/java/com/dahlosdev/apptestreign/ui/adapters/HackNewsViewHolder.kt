@@ -1,22 +1,17 @@
 package com.dahlosdev.apptestreign.ui.adapters
 
-import android.content.Intent
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.dahlosdev.apptestreign.R
-import com.dahlosdev.apptestreign.data.model.HitModel
+import com.dahlosdev.apptestreign.data.model.HackNewsModel
 import com.dahlosdev.apptestreign.databinding.HackNewsItemBinding
-import com.dahlosdev.apptestreign.ui.view.HackNewsDetailActivity
+import com.dahlosdev.apptestreign.domain.model.HackNews
 
 class HackNewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = HackNewsItemBinding.bind(view)
-    fun render(hit: HitModel) {
-        binding.txtTitle.text = hit.title ?: hit.story_title
-        binding.txtAuthor.text = hit.author
+    fun render(hackNewsModel: HackNews) {
+        binding.txtTitle.text = hackNewsModel.title ?: hackNewsModel.story_title
+        binding.txtAuthor.text = hackNewsModel.author
         binding.itemHackNews
 
         itemView.setOnClickListener {

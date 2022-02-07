@@ -7,17 +7,11 @@ import javax.inject.Inject
 
 class HackNewsService @Inject constructor(private val api: HackNewsApiClient) {
 
-    suspend fun getHackNews(): HackNewsModel {
+    suspend fun getHackNews(): List<HackNewsModel> {
         return withContext(Dispatchers.IO) {
             val response = api.getAllHackNews()
-            response.body()!!
+            response.body()?.hits ?: arrayListOf()
         }
     }
 
-    suspend fun getHackNewsByPage(page: Int): HackNewsModel {
-        return withContext(Dispatchers.IO) {
-            val response = api.getHackNewsByPage(page)
-            response.body()!!
-        }
-    }
 }
