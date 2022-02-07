@@ -16,12 +16,21 @@ class HackNewsAdapter(private val hackNewsList: MutableList<HitModel>) :
 
     override fun onBindViewHolder(holder: HackNewsViewHolder, position: Int) {
         holder.render(hackNewsList[position])
+        holder.itemView.setOnClickListener{
+            hackNewsList.removeAt(position)
+            notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int = hackNewsList.size
 
     fun deleteItem(i: Int) {
         hackNewsList.removeAt(i)
+        notifyDataSetChanged()
+    }
+
+    fun clear(){
+        hackNewsList.clear()
         notifyDataSetChanged()
     }
 }

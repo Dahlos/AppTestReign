@@ -5,17 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dahlosdev.apptestreign.data.model.HackNewsModel
 import com.dahlosdev.apptestreign.domain.GetHackNews
-import com.dahlosdev.apptestreign.domain.GetHackNewsByPage
 import kotlinx.coroutines.launch
 
 class HackNewsViewModel : ViewModel() {
 
-    val hackNewsModel = MutableLiveData<HackNewsModel>()
-    val isLoading = MutableLiveData<Boolean>()
-    val currentPageHackNews = MutableLiveData<Int>()
+    var hackNewsModel = MutableLiveData<HackNewsModel>()
+    val isLoading     = MutableLiveData<Boolean>()
+    val isRefreshing  = MutableLiveData<Boolean>()
 
-    var getHackNews = GetHackNews()
-    var getHackNewsByPage = GetHackNewsByPage()
+    // USE CASES
+    var getHackNews   = GetHackNews()
 
     fun onCreate() {
         viewModelScope.launch {
@@ -29,15 +28,16 @@ class HackNewsViewModel : ViewModel() {
         }
     }
 
-    fun getHackNewsPage(page: Int) {
+    fun onRefresh() {
         viewModelScope.launch {
-            isLoading.postValue(true)
-            val result = getHackNewsByPage(page)
+            isRefreshing.postValue(true)
+            val result = getHackNews()
 
             if (result != null) {
                 hackNewsModel.postValue(result!!)
-                isLoading.postValue(false)
+                isRefreshing.postValue(false)
             }
         }
     }
+
 }

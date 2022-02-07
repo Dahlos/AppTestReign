@@ -10,7 +10,6 @@ class HackNewsService {
 
     private val retrofit = RetrofitHelper.getRetrofit()
 
-    //    suspend fun getHackNews(): List<HackNewsModel> {
     suspend fun getHackNews(): HackNewsModel {
         return withContext(Dispatchers.IO) {
             val response = retrofit.create(HackNewsApiClient::class.java).getAllHackNews()

@@ -7,7 +7,6 @@ class HackNewsRepository {
 
     private val api = HackNewsService()
 
-    //    suspend fun getAllHackNews(): List<HackNewsModel> {
     suspend fun getAllHackNews(): HackNewsModel {
         val response = api.getHackNews()
         HackNewsProvider.hackNews = response

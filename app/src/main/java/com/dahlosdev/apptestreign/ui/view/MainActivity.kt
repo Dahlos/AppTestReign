@@ -1,18 +1,19 @@
 package com.dahlosdev.apptestreign.ui.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dahlosdev.apptestreign.R
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.dahlosdev.apptestreign.data.model.HackNewsModel
 import com.dahlosdev.apptestreign.databinding.ActivityMainBinding
 import com.dahlosdev.apptestreign.ui.adapters.HackNewsAdapter
 import com.dahlosdev.apptestreign.ui.viewmodel.HackNewsViewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,21 +25,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val manager = LinearLayoutManager(this)
 
-        hackNewsViewModel.getHackNewsPage(2)
+        hackNewsViewModel.onCreate()
 
         hackNewsViewModel.isLoading.observe(this, Observer {
             binding.progressBar.isVisible = it
         })
 
-        hackNewsViewModel.hackNewsModel.observe(this, Observer {
-            val manager = LinearLayoutManager(this)
-            val decoration = DividerItemDecoration(this, manager.orientation)
-            binding.rvHackNews.layoutManager = manager
-            binding.rvHackNews.adapter = HackNewsAdapter(it.hits)
-            binding.rvHackNews.addItemDecoration(decoration)
-
+        hackNewsViewModel.isRefreshing.observe(this, Observer {
+            binding.swRefresh.isRefreshing = it
         })
 
+        hackNewsViewModel.hackNewsModel.observe(this, Observer {
+            binding.rvHackNews.layoutManager = manager
+            binding.rvHackNews.adapter = HackNewsAdapter(it.hits)
+            if (binding.rvHackNews.itemDecorationCount == 0) {
+                val decoration = DividerItemDecoration(this, manager.orientation)
+                binding.rvHackNews.addItemDecoration(decoration)
+            }
+        })
+
+        binding.swRefresh.setOnRefreshListener(OnRefreshListener {
+            hackNewsViewModel.onRefresh()
+        })
     }
 }
