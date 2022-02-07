@@ -13,8 +13,9 @@ import com.dahlosdev.apptestreign.data.model.HackNewsModel
 import com.dahlosdev.apptestreign.databinding.ActivityMainBinding
 import com.dahlosdev.apptestreign.ui.adapters.HackNewsAdapter
 import com.dahlosdev.apptestreign.ui.viewmodel.HackNewsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
