@@ -13,6 +13,9 @@ class HackNewsDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHackNewsDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val story_url = intent.getStringExtra("story_url")
+
         binding.webView.webChromeClient = object : WebChromeClient() {}
 
         binding.webView.webViewClient = object : WebViewClient() {}
@@ -20,7 +23,9 @@ class HackNewsDetailActivity : AppCompatActivity() {
         val settings = binding.webView.settings
         settings.javaScriptEnabled = true
 
-        binding.webView.loadUrl("https://google.com")
+        if (story_url != null) {
+            binding.webView.loadUrl(story_url)
+        }
     }
 
     override fun onBackPressed() {

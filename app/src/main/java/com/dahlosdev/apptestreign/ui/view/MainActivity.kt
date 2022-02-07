@@ -2,11 +2,16 @@ package com.dahlosdev.apptestreign.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dahlosdev.apptestreign.R
 import com.dahlosdev.apptestreign.databinding.ActivityMainBinding
+import com.dahlosdev.apptestreign.ui.adapters.HackNewsAdapter
 import com.dahlosdev.apptestreign.ui.viewmodel.HackNewsViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -20,11 +25,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-     //   hackNewsViewModel.onCreate()
         hackNewsViewModel.getHackNewsPage(2)
 
+        hackNewsViewModel.isLoading.observe(this, Observer {
+            binding.progressBar.isVisible = it
+        })
+
         hackNewsViewModel.hackNewsModel.observe(this, Observer {
-            binding.txtTest.text = it.hits[0].story_title
+            val manager = LinearLayoutManager(this)
+            val decoration = DividerItemDecoration(this, manager.orientation)
+            binding.rvHackNews.layoutManager = manager
+            binding.rvHackNews.adapter = HackNewsAdapter(it.hits)
+            binding.rvHackNews.addItemDecoration(decoration)
+
         })
 
     }

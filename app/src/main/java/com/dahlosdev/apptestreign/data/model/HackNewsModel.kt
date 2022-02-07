@@ -6,6 +6,6 @@ data class HackNewsModel(
     @SerializedName("page") val page: String,
     @SerializedName("nbHits") val nbHits: String,
     @SerializedName("nbPages") val nbPages: String,
-    @SerializedName("hits") val hits: List<HitModel>,
+    @SerializedName("hits") val hits: MutableList<HitModel>,
 ) {
 }

@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/smh00/Desktop/Android/AppTestReign/app/src/main/res/layout/activity_main.xml" value="0.4925925925925926" />
+        <entry key="..\:/Users/smh00/Desktop/Android/AppTestReign/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/smh00/Desktop/Android/AppTestReign/app/src/main/res/layout/activity_web_view.xml" value="0.3625" />
         <entry key="..\:/Users/smh00/Desktop/Android/AppTestReign/app/src/main/res/layout/blog_item.xml" value="0.3625" />
+        <entry key="..\:/Users/smh00/Desktop/Android/AppTestReign/app/src/main/res/layout/hack_news_item.xml" value="0.33" />
       </map>
     </option>
   </component>
