@@ -1,5 +1,7 @@
 package com.dahlosdev.apptestreign.ui.viewmodel
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,14 +18,15 @@ class HackNewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var hackNewsModel = MutableLiveData<List<HackNews>>()
+    var deletedHackNewsModel = ArrayList<HackNews>()
     val isLoading = MutableLiveData<Boolean>()
     val isRefreshing = MutableLiveData<Boolean>()
 
     fun onCreate() {
         viewModelScope.launch {
             isLoading.postValue(true)
-            val result = getHackNews()
-
+            var result = getHackNews()
+            result = filterDeletedHackNews(result)
             if (result != null) {
                 hackNewsModel.postValue(result)
                 isLoading.postValue(false)
@@ -34,8 +37,8 @@ class HackNewsViewModel @Inject constructor(
     fun onRefresh() {
         viewModelScope.launch {
             isRefreshing.postValue(true)
-            val result = getHackNews()
-
+            var result = getHackNews()
+            result = filterDeletedHackNews(result)
             if (result != null) {
                 hackNewsModel.postValue(result)
                 isRefreshing.postValue(false)
@@ -43,4 +46,10 @@ class HackNewsViewModel @Inject constructor(
         }
     }
 
+    private fun filterDeletedHackNews(hackNewsList: List<HackNews>): List<HackNews> =
+        hackNewsList.filterNot { deletedHackNewsModel.contains(it) }
+
+    fun onDeleteHackNews(hackNews: HackNews) {
+        deletedHackNewsModel.add(hackNews)
+    }
 }
